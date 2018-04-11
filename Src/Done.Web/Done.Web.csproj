@@ -14,8 +14,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MyTaskList</RootNamespace>
-    <AssemblyName>MyTaskList</AssemblyName>
+    <RootNamespace>Done.Web</RootNamespace>
+    <AssemblyName>Done.Web</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -150,25 +150,19 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\TasksController.cs" />
+    <Compile Include="Controllers\GoalsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201803291449316_InitialCreate.cs" />
-    <Compile Include="Migrations\201803291449316_InitialCreate.Designer.cs">
-      <DependentUpon>201803291449316_InitialCreate.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201804031555315_MyTasks.cs" />
-    <Compile Include="Migrations\201804031555315_MyTasks.Designer.cs">
-      <DependentUpon>201804031555315_MyTasks.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Tasks\IndexViewModel.cs" />
     <Compile Include="Models\Pagination\Page.cs" />
     <Compile Include="Models\Pagination\PageViewModel.cs" />
-    <Compile Include="Models\TaskItem.cs" />
-    <Compile Include="Models\TaskItemStatus.cs" />
-    <Compile Include="Models\TasksContext.cs" />
+    <Compile Include="Models\Goal.cs" />
+    <Compile Include="Models\State.cs" />
+    <Compile Include="Models\GoalsContext.cs" />
     <Compile Include="Models\TasksInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -241,9 +235,9 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Tasks\Index.cshtml" />
-    <Content Include="Views\Tasks\New.cshtml" />
-    <Content Include="Views\Tasks\Edit.cshtml" />
+    <Content Include="Views\Goals\Index.cshtml" />
+    <Content Include="Views\Goals\New.cshtml" />
+    <Content Include="Views\Goals\Edit.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper-utils.min.js.map" />

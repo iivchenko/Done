@@ -1,4 +1,4 @@
-﻿namespace MyTaskList.Models.Pagination
+﻿namespace Done.Web.Models.Pagination
 {
     public sealed class Page
     {

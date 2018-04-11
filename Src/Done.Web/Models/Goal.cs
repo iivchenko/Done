@@ -1,6 +1,6 @@
-﻿namespace MyTaskList.Models
+﻿namespace Done.Web.Models
 {
-    public sealed class TaskItem
+    public sealed class Goal
     {
         public long Id { get; set; }
 
@@ -8,6 +8,6 @@
 
         public string Description { get; set; }
 
-        public TaskItemStatus Status { get; set; }
+        public State State { get; set; }
     }
 }

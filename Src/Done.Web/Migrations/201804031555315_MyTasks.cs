@@ -1,8 +1,7 @@
-namespace MyTaskList.Migrations
+using System.Data.Entity.Migrations;
+
+namespace Done.Web.Migrations
 {
-    using System;
-    using System.Data.Entity.Migrations;
-    
     public partial class MyTasks : DbMigration
     {
         public override void Up()

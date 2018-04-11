@@ -1,13 +1,13 @@
-﻿using MyTaskList.Models.Pagination;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Done.Web.Models.Pagination;
 
-namespace MyTaskList.Models.Tasks
+namespace Done.Web.Models.Tasks
 {
     public sealed class IndexViewModel
     {
         public int Total { get; set; }
 
-        public IEnumerable<TaskItem> Tasks { get; set; }
+        public IEnumerable<Goal> Tasks { get; set; }
 
         public PageViewModel Pagination { get; set; }
 

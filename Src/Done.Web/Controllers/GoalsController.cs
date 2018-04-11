@@ -3,21 +3,21 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using MyTaskList.Models;
-using MyTaskList.Models.Tasks;
+using Done.Web.Models;
+using Done.Web.Models.Tasks;
 
-namespace MyTaskList.Controllers
+namespace Done.Web.Controllers
 {
-    public class TasksController : Controller
+    public class GoalsController : Controller
     {
         private const int PageSize = 20;
         private const int PagesCount = 5;
-        private readonly TasksContext _tasksContext = new TasksContext();
+        private readonly GoalsContext _goalsContext = new GoalsContext();
 
         [HttpGet]
         public async Task<ActionResult> Index(string pattern = "", int page = 1)
         {
-            var tasksCount = _tasksContext.Tasks.Count(x => x.Name.Contains(pattern));
+            var tasksCount = _goalsContext.Tasks.Count(x => x.Name.Contains(pattern));
             var totalPages = (int)Math.Ceiling(tasksCount / (decimal)PageSize);
 
             if (page < 1 || (page > totalPages && totalPages > 0))
@@ -26,7 +26,7 @@ namespace MyTaskList.Controllers
             }
 
             var tasks =
-                await _tasksContext
+                await _goalsContext
                     .Tasks
                     .Where(x => x.Name.Contains(pattern))
                     .OrderBy(x => x.Id)
@@ -51,36 +51,36 @@ namespace MyTaskList.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> New(TaskItem task)
+        public async Task<ActionResult> New(Goal task)
         {
-            _tasksContext.Tasks.Add(task);
-            await _tasksContext.SaveChangesAsync();
+            _goalsContext.Tasks.Add(task);
+            await _goalsContext.SaveChangesAsync();
 
-            return RedirectToAction("Index", await _tasksContext.Tasks.ToListAsync());
+            return RedirectToAction("Index", await _goalsContext.Tasks.ToListAsync());
         }
 
         [HttpGet]
         public async Task<ActionResult> Edit(long id)
         {
             // TODO: Provide correct and nice error view when item is not exist
-            return View(await _tasksContext.Tasks.SingleAsync(x => x.Id == id));
+            return View(await _goalsContext.Tasks.SingleAsync(x => x.Id == id));
         }
 
         [HttpPost]
-        public async Task<ActionResult> Edit(TaskItem task)
+        public async Task<ActionResult> Edit(Goal task)
         {
-            _tasksContext.Entry(task).State = EntityState.Modified;
+            _goalsContext.Entry(task).State = EntityState.Modified;
 
-            await _tasksContext.SaveChangesAsync();
+            await _goalsContext.SaveChangesAsync();
 
-            return RedirectToAction("Index", await _tasksContext.Tasks.ToListAsync());
+            return RedirectToAction("Index", await _goalsContext.Tasks.ToListAsync());
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                _tasksContext.Dispose();
+                _goalsContext.Dispose();
             }
 
             base.Dispose(disposing);

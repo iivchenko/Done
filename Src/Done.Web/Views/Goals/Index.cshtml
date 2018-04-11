@@ -1,6 +1,6 @@
-﻿@model MyTaskList.Models.Tasks.IndexViewModel
-
-@using MyTaskList.Models.Pagination;
+﻿@using Done.Web.Models.Pagination
+@using Done.Web.Models.Tasks
+@model MyTaskList.Models.Tasks.IndexViewModel
 
 @{
     ViewBag.Title = "Tasks";
@@ -28,7 +28,7 @@
 
 <!-- Html helpers -->
 
-@helper TrySetActive(MyTaskList.Models.Pagination.Page page)
+@helper TrySetActive(Page page)
     {
         if (page.IsActive)
         {
@@ -36,7 +36,7 @@
         }
 }
 
-@helper TrySetDisabled(MyTaskList.Models.Pagination.Page page)
+@helper TrySetDisabled(Page page)
     {
         if (!page.IsEnabled)
         {
@@ -44,7 +44,7 @@
         }
 }
 
-@helper CreatePagination(MyTaskList.Models.Tasks.IndexViewModel vm)
+@helper CreatePagination(IndexViewModel vm)
     {
         var pagination = vm.Pagination;
         <nav>

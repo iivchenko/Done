@@ -1,5 +1,5 @@
-﻿@model TaskItem
-@using MyTaskList.Models
+﻿@using Done.Web.Models
+@model TaskItem
 
 @{
     ViewBag.Title = "Edit Task";
@@ -26,7 +26,7 @@
                 <label class="input-group-text" for="inputGroupSelect01">Status</label>
             </div>
             <select name="Status" class="custom-select" id="inputGroupSelect01">
-                @foreach (var item in Enum.GetNames(typeof(TaskItemStatus)))
+                @foreach (var item in Enum.GetNames(typeof(State)))
                 {
                     <option value="@item" @If(@item, @Model.Status.ToString(), @select().ToString())>@item</option>
                 }
