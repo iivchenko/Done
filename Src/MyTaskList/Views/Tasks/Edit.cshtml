@@ -1,0 +1,54 @@
+﻿@model TaskItem
+@using MyTaskList.Models
+
+@{
+    ViewBag.Title = "Edit Task";
+}
+
+<br/>
+
+<form method="post" action="">
+
+    <input type="hidden" name="id" value="@Model.Id" />
+
+    <div style="display: flex">
+        <div class="input-group">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">Name</span>
+                </div>
+                <input name="Name" value="@Model.Name" type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1" />
+            </div>
+        </div>
+
+        <div class="input-group mb-3 ml-3" style="max-width: 200px;">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Status</label>
+            </div>
+            <select name="Status" class="custom-select" id="inputGroupSelect01">
+                @foreach (var item in Enum.GetNames(typeof(TaskItemStatus)))
+                {
+                    <option value="@item" @If(@item, @Model.Status.ToString(), @select().ToString())>@item</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="mb-3">
+        <textarea name="Description" class="form-control" aria-label="With textarea">@Model.Description</textarea>
+    </div>
+
+    <button type="submit" class="btn btn-success float-right">Update</button>
+    <br />
+    <br />
+</form>
+
+@helper select()
+    {@("selected=\"selected\"")}
+
+@helper If(string x, string y, string then)
+    {
+        if (x == y)
+        {
+            @then
+        }
+}

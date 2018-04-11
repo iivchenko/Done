@@ -1,0 +1,75 @@
+﻿@model MyTaskList.Models.Tasks.IndexViewModel
+
+@using MyTaskList.Models.Pagination;
+
+@{
+    ViewBag.Title = "Tasks";
+}
+
+<!-- TODO: Make more accurate task count -->
+<p><h2>Tasks <span class="badge badge-pill badge-secondary">@Model.Total</span></h2></p> 
+
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var task in Model.Tasks)
+    {
+        <tr><td><a href="/Tasks/Edit/@task.Id">@task.Name</a></td><td>(@task.Status)</td></tr>
+    }
+    </tbody>
+</table>
+
+@CreatePagination(Model)
+
+<!-- Html helpers -->
+
+@helper TrySetActive(MyTaskList.Models.Pagination.Page page)
+    {
+        if (page.IsActive)
+        {
+            @("active")
+        }
+}
+
+@helper TrySetDisabled(MyTaskList.Models.Pagination.Page page)
+    {
+        if (!page.IsEnabled)
+        {
+            @("disabled")
+        }
+}
+
+@helper CreatePagination(MyTaskList.Models.Tasks.IndexViewModel vm)
+    {
+        var pagination = vm.Pagination;
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li class="page-item @TrySetDisabled(pagination.Previous)">
+                    <a class="page-link" href="~/Tasks/Index?pattern=@vm.Pattern&page=@pagination.Previous.Index" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+
+                @foreach (var page in pagination.Pages)
+                {
+                    <!-- TODO: Implement correct disable for active page button to avoid naviagtion to it self!-->
+                    <li class="page-item @TrySetActive(page)">
+                        <a class="page-link" href="~/Tasks/Index?pattern=@vm.Pattern&page=@page.Index">@page.Index</a>
+                    </li>
+                }
+
+                <li class="page-item @TrySetDisabled(pagination.Next)">
+                    <a class="page-link" href="~/Tasks/Index?pattern=@vm.Pattern&page=@pagination.Next.Index" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+}
