@@ -9,6 +9,6 @@ namespace Done.Web.Models
         {
         }
 
-        public DbSet<Goal> Tasks { get; set; }
+        public DbSet<Goal> Goals { get; set; }
     }
 }

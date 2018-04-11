@@ -8,7 +8,7 @@ namespace Done.Web
     {
         protected void Application_Start()
         {
-            //Database.SetInitializer(new TasksInitializer());
+            //Database.SetInitializer(new GoalsInitializer());
 
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

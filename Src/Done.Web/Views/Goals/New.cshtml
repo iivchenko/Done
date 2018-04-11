@@ -1,6 +1,6 @@
 ﻿@using Done.Web.Models
 @{
-    ViewBag.Title = "New Task";
+    ViewBag.Title = "New Goal";
 }
 
 <br />
@@ -19,9 +19,9 @@
 
         <div class="input-group mb-3 ml-3" style="max-width: 200px;">
             <div class="input-group-prepend">
-                <label class="input-group-text" for="inputGroupSelect01">Status</label>
+                <label class="input-group-text" for="inputGroupSelect01">State</label>
             </div>
-            <select name="Status" class="custom-select" id="inputGroupSelect01">
+            <select name="State" class="custom-select" id="inputGroupSelect01">
                 @foreach (var item in Enum.GetNames(typeof(State)))
                 {
                     <option value="@item">@item</option>

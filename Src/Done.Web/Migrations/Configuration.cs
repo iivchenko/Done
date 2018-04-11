@@ -1,17 +1,18 @@
-using System.Data.Entity.Migrations;
-using Done.Web.Models;
-
 namespace Done.Web.Migrations
 {
-    internal sealed class Configuration : DbMigrationsConfiguration<GoalsContext>
+    using System;
+    using System.Data.Entity;
+    using System.Data.Entity.Migrations;
+    using System.Linq;
+
+    internal sealed class Configuration : DbMigrationsConfiguration<Done.Web.Models.GoalsContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "Done.Models.GoalsContext";
         }
 
-        protected override void Seed(GoalsContext context)
+        protected override void Seed(Done.Web.Models.GoalsContext context)
         {
             //  This method will be called after migrating to the latest version.
 
