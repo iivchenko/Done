@@ -1,26 +1,26 @@
-﻿@using Done.Web.Models.Goals
-@using Page = Done.Web.Models.Pagination.Page
-@model Done.Web.Models.Goals.IndexViewModel
+﻿@using Page = Done.Web.Models.ViewModels.Pagination.Page
+@using Done.Web.Models.ViewModels.Goals
+@model IndexViewModel
 
 @{
     ViewBag.Title = "Goals";
 }
 
 <!-- TODO: Make more accurate gaol count -->
-<p><h2>Goals <span class="badge badge-pill badge-secondary">@Model.Total</span></h2></p> 
+<p><h2>Goals <span class="badge badge-pill badge-secondary">@Model.Total</span></h2></p>
 
 <table class="table table-hover">
     <thead>
-    <tr>
-        <th scope="col">Name</th>
-        <th scope="col">State</th>
-    </tr>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">State</th>
+        </tr>
     </thead>
     <tbody>
-    @foreach (var goal in Model.Goals)
-    {
-        <tr><td><a href="/Goals/Edit/@goal.Id">@goal.Name</a></td><td>(@goal.State)</td></tr>
-    }
+        @foreach (var goal in Model.Goals)
+        {
+            <tr><td><a href="/Goals/Edit/@goal.Id">@goal.Name</a></td><td>(@goal.State)</td></tr>
+        }
     </tbody>
 </table>
 

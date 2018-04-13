@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Done.Web.Models;
-using Done.Web.Models.Goals;
+using Done.Web.Models.Data;
+using Done.Web.Models.ViewModels.Goals;
+using Done.Web.Models.ViewModels.Pagination;
 
 namespace Done.Web.Controllers
 {
@@ -36,8 +38,8 @@ namespace Done.Web.Controllers
             var indexVm = new IndexViewModel
             {
                 Total = goalsCount,
-                Pagination = new Models.Pagination.PageViewModel(totalPages, PagesCount, page),
-                Goals = goals,
+                Pagination = new PageViewModel(totalPages, PagesCount, page),
+                Goals = goals.Select(x => x.ToViewModel()),
                 Pattern = pattern
             };
 
@@ -51,12 +53,17 @@ namespace Done.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> New(Goal goal)
+        public async Task<ActionResult> New([Bind(Include = "Id,Name,Description,State")] GoalViewModel goal)
         {
-            _goalsContext.Goals.Add(goal);
-            await _goalsContext.SaveChangesAsync();
+            if (ModelState.IsValid)
+            {
+                _goalsContext.Goals.Add(goal.ToModel());
+                await _goalsContext.SaveChangesAsync();
 
-            return RedirectToAction("Index", await _goalsContext.Goals.ToListAsync());
+                return RedirectToAction("Index", await _goalsContext.Goals.ToListAsync());
+            }
+
+            return View(goal);
         }
 
         [HttpGet]

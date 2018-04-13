@@ -159,13 +159,15 @@
       <DependentUpon>201804110746311_MyTaskListToGoals.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Goals\IndexViewModel.cs" />
-    <Compile Include="Models\Pagination\Page.cs" />
-    <Compile Include="Models\Pagination\PageViewModel.cs" />
-    <Compile Include="Models\Goal.cs" />
-    <Compile Include="Models\State.cs" />
-    <Compile Include="Models\GoalsContext.cs" />
-    <Compile Include="Models\GoalsInitializer.cs" />
+    <Compile Include="Models\ModelConverterExtensions.cs" />
+    <Compile Include="Models\ViewModels\Goals\GoalViewModel.cs" />
+    <Compile Include="Models\ViewModels\Goals\IndexViewModel.cs" />
+    <Compile Include="Models\ViewModels\Pagination\Page.cs" />
+    <Compile Include="Models\ViewModels\Pagination\PageViewModel.cs" />
+    <Compile Include="Models\Data\Goal.cs" />
+    <Compile Include="Models\Data\State.cs" />
+    <Compile Include="Models\Data\GoalsContext.cs" />
+    <Compile Include="Models\Data\GoalsInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -252,6 +254,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\Goals\" />
+    <Folder Include="Models\Pagination\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

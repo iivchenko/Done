@@ -1,6 +1,6 @@
 ﻿using System.Data.Entity;
 
-namespace Done.Web.Models
+namespace Done.Web.Models.Data
 {
     // TODO: Remove the initializer. Provide new db initializer with starter kit: welcom task, basic tags (status.inprogress status.done, priority.low, priority.middle) etc.
     public sealed class GoalsInitializer : DropCreateDatabaseAlways<GoalsContext>

@@ -1,4 +1,4 @@
-﻿namespace Done.Web.Models
+﻿namespace Done.Web.Models.Data
 {
     public enum State
     {

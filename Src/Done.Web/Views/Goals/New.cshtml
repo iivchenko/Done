@@ -1,4 +1,7 @@
-﻿@using Done.Web.Models
+﻿@using Done.Web.Models.Data
+@using Done.Web.Models.ViewModels.Goals
+@model GoalViewModel
+
 @{
     ViewBag.Title = "New Goal";
 }
@@ -13,7 +16,10 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">Name</span>
                 </div>
-                <input name="Name" type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"/>
+                @*<input name="Name" type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1" />*@
+                
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name)
             </div>
         </div>
 
@@ -34,6 +40,6 @@
     </div>
 
     <button type="submit" class="btn btn-success float-right">Create</button>
-    <br/>
-    <br/>
+    <br />
+    <br />
 </form>

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Done.Web.Models.Pagination
+namespace Done.Web.Models.ViewModels.Pagination
 {
     public sealed class PageViewModel
     {

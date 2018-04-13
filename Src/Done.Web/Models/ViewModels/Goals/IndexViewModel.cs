@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
-using Done.Web.Models.Pagination;
+using Done.Web.Models.ViewModels.Pagination;
 
-namespace Done.Web.Models.Goals
+namespace Done.Web.Models.ViewModels.Goals
 {
     public sealed class IndexViewModel
     {
         public int Total { get; set; }
 
-        public IEnumerable<Goal> Goals { get; set; }
+        public IEnumerable<GoalViewModel> Goals { get; set; }
 
         public PageViewModel Pagination { get; set; }
 

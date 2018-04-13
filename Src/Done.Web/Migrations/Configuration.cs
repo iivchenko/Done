@@ -1,3 +1,5 @@
+using Done.Web.Models.Data;
+
 namespace Done.Web.Migrations
 {
     using System;
@@ -5,14 +7,14 @@ namespace Done.Web.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Done.Web.Models.GoalsContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<GoalsContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(Done.Web.Models.GoalsContext context)
+        protected override void Seed(GoalsContext context)
         {
             //  This method will be called after migrating to the latest version.
 
