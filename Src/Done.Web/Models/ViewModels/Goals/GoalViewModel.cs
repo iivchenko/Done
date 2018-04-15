@@ -10,6 +10,7 @@ namespace Done.Web.Models.ViewModels.Goals
         public long Id { get; set; }
 
         [Required]
+        [MaxLength(100)]
         public string Name { get; set; }
 
         public string Description { get; set; }

@@ -5,27 +5,30 @@
     ViewBag.Title = "Edit Goal";
 }
 
-<br/>
+<br />
 
-<form method="post" action="">
-
-    <input type="hidden" name="id" value="@Model.Id" />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.Id)
 
     <div style="display: flex">
         <div class="input-group">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1">Name</span>
+                    <span class="input-group-text" id="name-addon">Name</span>
                 </div>
-                <input name="Name" value="@Model.Name" type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1" />
+
+                @Html.EditorFor(x => x.Name, new { htmlAttributes = new { @class = "form-control", aria_label = "Username", aria_describedby = "name-addon" } })
             </div>
+            @Html.ValidationMessageFor(x => x.Name, "", new { @class = "text-danger" })
         </div>
 
         <div class="input-group mb-3 ml-3" style="max-width: 200px;">
-            <div class="input-group-prepend">
-                <label class="input-group-text" for="inputGroupSelect01">Status</label>
+            <div class="input-group-prepend" style="display: inline">
+                <span class="input-group-text" id="state-addon">Status</span>
             </div>
-            <select name="State" class="custom-select" id="inputGroupSelect01">
+            <select name="State" class="custom-select" aria-describedby="state-addon">
                 @foreach (var item in Enum.GetNames(typeof(Done.Web.Models.Data.State)))
                 {
                     <option value="@item" @If(@item, @Model.State.ToString(), @select().ToString())>@item</option>
@@ -40,7 +43,7 @@
     <button type="submit" class="btn btn-success float-right">Update</button>
     <br />
     <br />
-</form>
+}
 
 @helper select()
     {@("selected=\"selected\"")}

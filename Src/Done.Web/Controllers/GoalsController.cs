@@ -53,6 +53,7 @@ namespace Done.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> New([Bind(Include = "Id,Name,Description,State")] GoalViewModel goal)
         {
             if (ModelState.IsValid)
@@ -60,7 +61,7 @@ namespace Done.Web.Controllers
                 _goalsContext.Goals.Add(goal.ToModel());
                 await _goalsContext.SaveChangesAsync();
 
-                return RedirectToAction("Index", await _goalsContext.Goals.ToListAsync());
+                return RedirectToAction("Index");
             }
 
             return View(goal);
@@ -70,17 +71,24 @@ namespace Done.Web.Controllers
         public async Task<ActionResult> Edit(long id)
         {
             // TODO: Provide correct and nice error view when item is not exist
-            return View(await _goalsContext.Goals.SingleAsync(x => x.Id == id));
+            var model = await _goalsContext.Goals.SingleAsync(x => x.Id == id);
+            return View(model.ToViewModel());
         }
 
         [HttpPost]
-        public async Task<ActionResult> Edit(Goal goal)
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,Description,State")] GoalViewModel goal)
         {
-            _goalsContext.Entry(goal).State = EntityState.Modified;
+            if (ModelState.IsValid)
+            {
+                _goalsContext.Entry(goal.ToModel()).State = EntityState.Modified;
 
-            await _goalsContext.SaveChangesAsync();
+                await _goalsContext.SaveChangesAsync();
 
-            return RedirectToAction("Index", await _goalsContext.Goals.ToListAsync());
+                return RedirectToAction("Index");
+            }
+
+            return View(goal);
         }
 
         protected override void Dispose(bool disposing)

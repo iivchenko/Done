@@ -8,7 +8,8 @@ namespace Done.Web
     {
         protected void Application_Start()
         {
-            //Database.SetInitializer(new GoalsInitializer());
+            // TODO: Provide some default values during new db creation. Some sample goals etc.
+            //Database.SetInitializer(new GoalsInitializer());           
 
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
