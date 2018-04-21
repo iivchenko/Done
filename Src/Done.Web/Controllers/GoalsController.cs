@@ -33,7 +33,8 @@ namespace Done.Web.Controllers
                     .Where(x => x.Name.Contains(pattern))
                     .OrderBy(x => x.Id)
                     .Skip((page - 1) * PageSize)
-                    .Take(PageSize).ToListAsync();
+                    .Take(PageSize)
+                    .ToListAsync();
 
             var indexVm = new IndexViewModel
             {
@@ -47,6 +48,7 @@ namespace Done.Web.Controllers
         }
 
         [HttpGet]
+
         public ActionResult New()
         {
             return View();

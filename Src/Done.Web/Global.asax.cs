@@ -12,6 +12,7 @@ namespace Done.Web
             //Database.SetInitializer(new GoalsInitializer());           
 
             AreaRegistration.RegisterAllAreas();
+            FilterConfig.RegisterFilterProviders(FilterProviders.Providers);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);

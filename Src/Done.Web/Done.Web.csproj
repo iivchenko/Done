@@ -151,6 +151,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\GoalsController.cs" />
+    <Compile Include="Filters\LogExceptionFilterAttribute.cs" />
+    <Compile Include="Filters\LogFilterAttribute.cs" />
+    <Compile Include="Filters\LoggerFilterProvider.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

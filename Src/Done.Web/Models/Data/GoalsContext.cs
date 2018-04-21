@@ -5,7 +5,7 @@ namespace Done.Web.Models.Data
     public sealed class GoalsContext : DbContext
     {
         public GoalsContext()
-            : base("Default")
+            : base("Done")
         {
         }
 

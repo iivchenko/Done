@@ -1,83 +1,43 @@
 ﻿using System;
+using System.Threading;
 
 namespace Done.Web.Logging
 {
-    public static class Logger
+    public sealed class Logger
     {
-        private static LoggingContext LoggingContext;
+        private static AsyncLocal<LoggingContext> LoggingContext = new AsyncLocal<LoggingContext>();
+        private readonly LogLevel _level;
 
-        static Logger()
+        public Logger(LogLevel level)
         {
-            LoggingContext = new LoggingContext();
-        }
+            LoggingContext.Value = new LoggingContext();
 
-        public static void Log(LogLevel level, string message)
+            _level = level;
+        }       
+        
+        public void Log(LogLevel level, string controller, string action, string message)
         {
-            LogInternal(level, message);
-        }
+            LogInternal(level, controller, action, message);
+        }       
 
-        public static void LogTrace(string message)
-        {
-            LogInternal(LogLevel.Trace, message);
-        }
+        private void LogInternal(LogLevel level, string controller, string action, string message)
+        {   
+            if (level >= _level)
+            {
+                LoggingContext
+               .Value
+               .LogEntries
+               .Add(new LogEntry
+               {
+                   Level = level,
+                   CreateDate = DateTime.UtcNow,
+                   Controller = controller,
+                   Action = action,
+                   Message = message
+               });
 
-        public static void LogTrace(Exception exception)
-        {
-            LogInternal(LogLevel.Trace, exception.ToString());
-        }
-
-        public static void LogDebug(string message)
-        {
-            LogInternal(LogLevel.Debug, message);
-        }
-
-        public static void LogDebug(Exception exception)
-        {
-            LogInternal(LogLevel.Debug, exception.ToString());
-        }
-
-        public static void LogInfo(string message)
-        {
-            LogInternal(LogLevel.Info, message);
-        }
-
-        public static void LogInfo(Exception exception)
-        {
-            LogInternal(LogLevel.Info, exception.ToString());
-        }
-
-        public static void LogWarning(string message)
-        {
-            LogInternal(LogLevel.Warning, message);
-        }
-
-        public static void LogWarning(Exception exception)
-        {
-            LogInternal(LogLevel.Warning, exception.ToString());
-        }
-
-        public static void LogError(string message)
-        {
-            LogInternal(LogLevel.Error, message);
-        }
-
-        public static void LogError(Exception exception)
-        {
-            LogInternal(LogLevel.Error, exception.ToString());
-        }
-
-        private static void LogInternal(LogLevel level, string message)
-        {
-            LoggingContext
-                .LogEntries
-                .Add(new LogEntry
-                {
-                    Level = level,
-                    CreateDate = DateTime.UtcNow,
-                    Message = message
-                });
-
-            LoggingContext.SaveChanges();
+                LoggingContext.Value.SaveChanges();
+            }           
         }
     }
 }
