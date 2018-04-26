@@ -10,19 +10,14 @@ namespace Done.Web
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             
             routes.MapRoute(
-              name: "task_search",
+              name: "goal_search",
               url: "search/{pattern}",
               defaults: new { controller = "Goals", action = "Index" });
 
             routes.MapRoute(
-              name: "task",
-              url: "task/{id}",
-              defaults: new { controller = "Goals", action = "Edit" });
-
-            routes.MapRoute(
-             name: "old_home",
-             url: "Home/Index",
-             defaults: new { controller = "Goals", action = "Index" });
+              name: "goal",
+              url: "goal/{id}",
+              defaults: new { controller = "Goals", action = "Edit" });          
 
             routes.MapRoute(
                 name: "Default",

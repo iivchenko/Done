@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Done.Web.Models.ViewModels.Pagination;
+using Done.Core.Web.Pagination;
 
-namespace Done.Web.Models.ViewModels.Goals
+namespace Done.Web.Models.Goals
 {
     public sealed class IndexViewModel
     {

@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
-using Done.Web.Models.Data;
+using Done.Domain;
 
-namespace Done.Web.Models.ViewModels.Goals
+namespace Done.Web.Models.Goals
 {
     public sealed class GoalViewModel
     {

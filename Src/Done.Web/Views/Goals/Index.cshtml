@@ -1,5 +1,5 @@
-﻿@using Page = Done.Web.Models.ViewModels.Pagination.Page
-@using Done.Web.Models.ViewModels.Goals
+﻿@using Page = Done.Core.Web.Pagination.Page
+@using Done.Web.Models.Goals
 @model IndexViewModel
 
 @{
@@ -7,8 +7,15 @@
 }
 
 <!-- TODO: Make more accurate gaol count -->
-<p><h2>Goals <span class="badge badge-pill badge-secondary">@Model.Total</span></h2></p>
-
+<div style="display: -ms-inline-flexbox;">
+    <p>
+        <h2>
+            Goals <span class="badge badge-pill badge-light" style="font-size: 50%; vertical-align: top">@Model.Total</span>
+            
+            <a class="btn btn-success" style="float: right;" href=@Url.Action("New", "Goals")>New goal</a>
+        </h2>
+    </p>
+</div>
 <table class="table table-hover">
     <thead>
         <tr>
@@ -19,7 +26,12 @@
     <tbody>
         @foreach (var goal in Model.Goals)
         {
-            <tr><td><a href="/Goals/Edit/@goal.Id">@goal.Name</a></td><td>(@goal.State)</td></tr>
+            <tr>
+                <td>
+                    @Html.ActionLink(@goal.Name, "Edit", new { id = goal.Id })
+                </td>
+                <td>(@goal.State)</td>
+            </tr>
         }
     </tbody>
 </table>
@@ -48,24 +60,27 @@
     {
         var pagination = vm.Pagination;
         <nav>
+            @* Previos button *@
             <ul class="pagination justify-content-center">
                 <li class="page-item @TrySetDisabled(pagination.Previous)">
-                    <a class="page-link" href="~/Goals/Index?pattern=@vm.Pattern&page=@pagination.Previous.Index" aria-label="Previous">
+                    <a class="page-link" href=@Url.Action("Index",  new { pattern = @vm.Pattern, page = @pagination.Previous.Index }) aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                         <span class="sr-only">Previous</span>
                     </a>
                 </li>
 
+                @* Page buttons *@
                 @foreach (var page in pagination.Pages)
                 {
                     <!-- TODO: Implement correct disable for active page button to avoid naviagtion to it self!-->
                     <li class="page-item @TrySetActive(page)">
-                        <a class="page-link" href="~/Goals/Index?pattern=@vm.Pattern&page=@page.Index">@page.Index</a>
+                        <a class="page-link" href=@Url.Action("Index",  new { pattern = @vm.Pattern, page = @page.Index })>@page.Index</a>
                     </li>
                 }
 
+                @* Next button *@
                 <li class="page-item @TrySetDisabled(pagination.Next)">
-                    <a class="page-link" href="~/Goals/Index?pattern=@vm.Pattern&page=@pagination.Next.Index" aria-label="Next">
+                    <a class="page-link" href=@Url.Action("Index",  new { pattern = @vm.Pattern, page = @pagination.Next.Index }) aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                         <span class="sr-only">Next</span>
                     </a>

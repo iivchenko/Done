@@ -1,11 +1,12 @@
 ﻿using System.Data.Entity;
+using Done.Domain;
 
-namespace Done.Web.Models.Data
+namespace Done.Data
 {
     // TODO: Remove the initializer. Provide new db initializer with starter kit: welcom task, basic tags (status.inprogress status.done, priority.low, priority.middle) etc.
-    public sealed class GoalsInitializer : DropCreateDatabaseAlways<GoalsContext>
+    public sealed class GoalsInitializer : DropCreateDatabaseAlways<DoneContext>
     {
-        protected override void Seed(GoalsContext db)
+        protected override void Seed(DoneContext db)
         {
             db.Goals.Add(new Goal {Name = "Goal 1", State = State.Open});
             db.Goals.Add(new Goal {Name = "Goal 2", State = State.Open});

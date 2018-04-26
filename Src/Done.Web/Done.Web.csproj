@@ -162,14 +162,8 @@
     <Compile Include="Logging\LoggingContext.cs" />
     <Compile Include="Logging\LogLevel.cs" />
     <Compile Include="Models\ModelConverterExtensions.cs" />
-    <Compile Include="Models\ViewModels\Goals\GoalViewModel.cs" />
-    <Compile Include="Models\ViewModels\Goals\IndexViewModel.cs" />
-    <Compile Include="Models\ViewModels\Pagination\Page.cs" />
-    <Compile Include="Models\ViewModels\Pagination\PageViewModel.cs" />
-    <Compile Include="Models\Data\Goal.cs" />
-    <Compile Include="Models\Data\State.cs" />
-    <Compile Include="Models\Data\GoalsContext.cs" />
-    <Compile Include="Models\Data\GoalsInitializer.cs" />
+    <Compile Include="Models\Goals\GoalViewModel.cs" />
+    <Compile Include="Models\Goals\IndexViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -215,6 +209,8 @@
     <Content Include="Scripts\jquery-3.0.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.0.0.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -265,6 +261,28 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Done.Core.Data\Done.Core.Data.csproj">
+      <Project>{e8ec413c-a7fe-4118-9872-490b007a2ff2}</Project>
+      <Name>Done.Core.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Done.Core.Web\Done.Core.Web.csproj">
+      <Project>{68e2b2d8-5d35-4efb-8a22-12de70517067}</Project>
+      <Name>Done.Core.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Done.Core\Done.Core.csproj">
+      <Project>{de2fc21d-5081-4da3-bcb9-80fa0ed948f7}</Project>
+      <Name>Done.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Done.Data\Done.Data.csproj">
+      <Project>{cf126194-f4f9-410f-8d19-3fa98d969f7d}</Project>
+      <Name>Done.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Done.Domain\Done.Domain.csproj">
+      <Project>{8a5c1d05-278b-48b2-b5e2-91f443240cb3}</Project>
+      <Name>Done.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

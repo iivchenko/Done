@@ -1,5 +1,5 @@
-﻿using Done.Web.Models.Data;
-using Done.Web.Models.ViewModels.Goals;
+﻿using Done.Domain;
+using Done.Web.Models.Goals;
 
 namespace Done.Web.Models
 {

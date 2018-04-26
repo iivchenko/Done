@@ -1,4 +1,4 @@
-﻿namespace Done.Web.Models.ViewModels.Pagination
+﻿namespace Done.Core.Web.Pagination
 {
     public sealed class Page
     {

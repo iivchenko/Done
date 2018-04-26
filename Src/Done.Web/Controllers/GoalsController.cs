@@ -3,10 +3,12 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Done.Core.Data;
+using Done.Data;
+using Done.Domain;
 using Done.Web.Models;
-using Done.Web.Models.Data;
-using Done.Web.Models.ViewModels.Goals;
-using Done.Web.Models.ViewModels.Pagination;
+using Done.Web.Models.Goals;
+using Done.Core.Web.Pagination;
 
 namespace Done.Web.Controllers
 {
@@ -14,12 +16,17 @@ namespace Done.Web.Controllers
     {
         private const int PageSize = 20;
         private const int PagesCount = 5;
-        private readonly GoalsContext _goalsContext = new GoalsContext();
+        private readonly IRepository<Goal> _goals;
+
+        public GoalsController()
+        {
+            _goals = new Repository<Goal>(new DoneContext("Done"));
+        }
 
         [HttpGet]
         public async Task<ActionResult> Index(string pattern = "", int page = 1)
         {
-            var goalsCount = _goalsContext.Goals.Count(x => x.Name.Contains(pattern));
+            var goalsCount = _goals.Get(goal => true).Count(x => x.Name.Contains(pattern));
             var totalPages = (int)Math.Ceiling(goalsCount / (decimal)PageSize);
 
             if (page < 1 || (page > totalPages && totalPages > 0))
@@ -28,9 +35,8 @@ namespace Done.Web.Controllers
             }
 
             var goals =
-                await _goalsContext
-                    .Goals
-                    .Where(x => x.Name.Contains(pattern))
+                await _goals
+                    .Get(x => x.Name.Contains(pattern))
                     .OrderBy(x => x.Id)
                     .Skip((page - 1) * PageSize)
                     .Take(PageSize)
@@ -56,12 +62,11 @@ namespace Done.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> New([Bind(Include = "Id,Name,Description,State")] GoalViewModel goal)
+        public async Task<ActionResult> New([Bind(Include = "Name,Description,State")] GoalViewModel goal)
         {
             if (ModelState.IsValid)
             {
-                _goalsContext.Goals.Add(goal.ToModel());
-                await _goalsContext.SaveChangesAsync();
+                await _goals.AddAsync(goal.ToModel());
 
                 return RedirectToAction("Index");
             }
@@ -73,7 +78,7 @@ namespace Done.Web.Controllers
         public async Task<ActionResult> Edit(long id)
         {
             // TODO: Provide correct and nice error view when item is not exist
-            var model = await _goalsContext.Goals.SingleAsync(x => x.Id == id);
+            var model = await _goals.Get(x => x.Id == id).SingleAsync();
             return View(model.ToViewModel());
         }
 
@@ -83,9 +88,7 @@ namespace Done.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _goalsContext.Entry(goal.ToModel()).State = EntityState.Modified;
-
-                await _goalsContext.SaveChangesAsync();
+                await _goals.UpdateAsync(goal.ToModel());
 
                 return RedirectToAction("Index");
             }
@@ -97,7 +100,7 @@ namespace Done.Web.Controllers
         {
             if (disposing)
             {
-                _goalsContext.Dispose();
+                _goals.Dispose();
             }
 
             base.Dispose(disposing);
