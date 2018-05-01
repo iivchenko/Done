@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Done.Core.Data;
+using Done.Data;
+using Done.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,6 +9,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 
 namespace Done.Web
 {
@@ -21,6 +25,9 @@ namespace Done.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string connection = Configuration.GetConnectionString("Done");
+            services.AddDbContext<DoneContext>(options => options.UseSqlServer(connection));
+            services.AddScoped<IRepository<Goal>, Repository<Goal>>(provider => new Repository<Goal>(provider.GetService<DoneContext>()));
             services.AddMvc();
         }
 
@@ -41,8 +48,18 @@ namespace Done.Web
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                    name: "goal_search",
+                    template: "search/{pattern}",
+                    defaults: new { controller = "Goals", action = "Index" });
+
+                routes.MapRoute(
+                    name: "goal",
+                    template: "goal/{id}",
+                    defaults: new { controller = "Goals", action = "Edit" });
+
+                routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Goals}/{action=Index}/{id?}");
             });
         }
     }

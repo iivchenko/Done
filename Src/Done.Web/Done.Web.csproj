@@ -6,10 +6,18 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.2" />
   </ItemGroup>
 
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Done.Core.Data\Done.Core.Data.csproj" />
+    <ProjectReference Include="..\Done.Data\Done.Data.csproj" />
+    <ProjectReference Include="..\Done.Domain\Done.Domain.csproj" />
+    <ProjectReference Include="..\Done.Core.Web\Done.Core.Web.csproj" />
   </ItemGroup>
 
 </Project>
