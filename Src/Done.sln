@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Done.Web", "Done.Web\Done.Web.csproj", "{C6340147-67A7-4F89-91C1-D4AD591C4F4E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Done.Core", "Done.Core\Done.Core.csproj", "{DE2FC21D-5081-4DA3-BCB9-80FA0ED948F7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Done.Core.Web", "Done.Core.Web\Done.Core.Web.csproj", "{68E2B2D8-5D35-4EFB-8A22-12DE70517067}"
@@ -21,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C6340147-67A7-4F89-91C1-D4AD591C4F4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C6340147-67A7-4F89-91C1-D4AD591C4F4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C6340147-67A7-4F89-91C1-D4AD591C4F4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C6340147-67A7-4F89-91C1-D4AD591C4F4E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DE2FC21D-5081-4DA3-BCB9-80FA0ED948F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DE2FC21D-5081-4DA3-BCB9-80FA0ED948F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE2FC21D-5081-4DA3-BCB9-80FA0ED948F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
