@@ -36,55 +36,51 @@
     </tbody>
 </table>
 
-@CreatePagination(Model)
+@{
+var vm = @Model;
+var pagination = @Model.Pagination;
 
+<nav>
+    @* Previos button *@
+    <ul class="pagination justify-content-center">
+        <li class="page-item @TrySetDisabled(pagination.Previous)">
+            <a class="page-link" href=@Url.Action("Index",  new { pattern = @vm.Pattern, page = @pagination.Previous.Index }) aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+            </a>
+        </li>
+
+        @* Page buttons *@
+        @foreach (var page in pagination.Pages)
+        {
+            <!-- TODO: Implement correct disable for active page button to avoid naviagtion to it self!-->
+            <li class="page-item @TrySetActive(page)">
+                @Html.ActionLink(page.Index.ToString(), "Index", "Goals", new { pattern = vm.Pattern, page = page.Index }, new { @class="page-link" })
+                @*<a class="page-link" href=@Url.Action("Index",  new { pattern = @vm.Pattern, page = @page.Index })>@{return page.Index;}</a>*@
+            </li>
+        }
+
+        @* Next button *@
+        <li class="page-item @TrySetDisabled(pagination.Next)">
+            <a class="page-link" href=@Url.Action("Index",  new { pattern = @vm.Pattern, page = @pagination.Next.Index }) aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+            </a>
+        </li>`
+    </ul>
+</nav>
+}
 <!-- Html helpers -->
 
-@helper TrySetActive(Page page)
+@functions
+{
+    public string TrySetActive(Page page)
     {
-        if (page.IsActive)
-        {
-            @("active")
-        }
-}
+        return page.IsActive ? "active" : string.Empty;
+    }
 
-@helper TrySetDisabled(Page page)
+    public string TrySetDisabled(Page page)
     {
-        if (!page.IsEnabled)
-        {
-            @("disabled")
-        }
-}
-
-@helper CreatePagination(IndexViewModel vm)
-    {
-        var pagination = vm.Pagination;
-        <nav>
-            @* Previos button *@
-            <ul class="pagination justify-content-center">
-                <li class="page-item @TrySetDisabled(pagination.Previous)">
-                    <a class="page-link" href=@Url.Action("Index",  new { pattern = @vm.Pattern, page = @pagination.Previous.Index }) aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                </li>
-
-                @* Page buttons *@
-                @foreach (var page in pagination.Pages)
-                {
-                    <!-- TODO: Implement correct disable for active page button to avoid naviagtion to it self!-->
-                    <li class="page-item @TrySetActive(page)">
-                        <a class="page-link" href=@Url.Action("Index",  new { pattern = @vm.Pattern, page = @page.Index })>@page.Index</a>
-                    </li>
-                }
-
-                @* Next button *@
-                <li class="page-item @TrySetDisabled(pagination.Next)">
-                    <a class="page-link" href=@Url.Action("Index",  new { pattern = @vm.Pattern, page = @pagination.Next.Index }) aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+        return !page.IsActive ? "disabled" : string.Empty;
+    }   
 }

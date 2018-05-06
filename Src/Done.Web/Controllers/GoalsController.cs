@@ -32,9 +32,7 @@ namespace Done.Web.Controllers
 
             if (page < 1 || (page > totalPages && totalPages > 0))
             {
-                // TODO: Improve this shit
-                // return new NotFoundResult( $"Invalid page '{page}'! Should be in range from 1 to {totalPages}");
-                return new NotFoundResult();
+                return NotFound($"Invalid page '{page}'! Should be in range from 1 to {totalPages}");
             }
 
             var goals =

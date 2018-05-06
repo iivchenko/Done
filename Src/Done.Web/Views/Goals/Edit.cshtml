@@ -32,7 +32,7 @@
             <select name="State" class="custom-select" aria-describedby="state-addon">
                 @foreach (var item in Enum.GetNames(typeof(State)))
                 {
-                    <option value="@item" @If(@item, @Model.State.ToString(), @select().ToString())>@item</option>
+                    <option value="@item" @Select(@item, @Model.State.ToString()))>@item</option>
                 }
             </select>
         </div>
@@ -46,13 +46,10 @@
     <br />
 }
 
-@helper select()
-    {@("selected=\"selected\"")}
-
-@helper If(string x, string y, string then)
+@functions
+{
+    public string Select(string item, string state)
     {
-        if (x == y)
-        {
-            @then
-        }
+        return item == state ? "selected=\"selected\"" : string.Empty;        
+    }
 }
