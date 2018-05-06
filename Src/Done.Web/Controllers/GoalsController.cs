@@ -55,7 +55,6 @@ namespace Done.Web.Controllers
         }
 
         [HttpGet]
-
         public ActionResult New()
         {
             return View();

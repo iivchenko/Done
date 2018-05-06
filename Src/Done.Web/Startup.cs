@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace Done.Web
 {
@@ -26,7 +27,12 @@ namespace Done.Web
         public void ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration.GetConnectionString("Done");
-            services.AddDbContext<DoneContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<DoneContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("Done.Web")));
+
+            services
+                .AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<DoneContext>();
+
             services.AddScoped<IRepository<Goal>, Repository<Goal>>(provider => new Repository<Goal>(provider.GetService<DoneContext>()));
             services.AddMvc();
         }
@@ -44,6 +50,8 @@ namespace Done.Web
             }
 
             app.UseStaticFiles();
+
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

@@ -11,9 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.3" />
+    <!-- Necessary for EF migratioinss -->
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.2" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <ProjectReference Include="..\Done.Core.Data\Done.Core.Data.csproj" />
     <ProjectReference Include="..\Done.Data\Done.Data.csproj" />
