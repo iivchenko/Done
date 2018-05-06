@@ -27,18 +27,20 @@ namespace Done.Web
         public void ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration.GetConnectionString("Done");
-            services.AddDbContext<DoneContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("Done.Web")));
+            services.AddDbContext<DoneContext>(options => options.UseSqlServer(connection));
 
             services
                 .AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<DoneContext>();
+            
+            services.AddTransient<DbInitializer>();
 
             services.AddScoped<IRepository<Goal>, Repository<Goal>>(provider => new Repository<Goal>(provider.GetService<DoneContext>()));
             services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, DbInitializer dbInitializer)
         {
             if (env.IsDevelopment())
             {
@@ -69,6 +71,9 @@ namespace Done.Web
                     name: "default",
                     template: "{controller=Goals}/{action=Index}/{id?}");
             });
+
+            // TODO: Improve shit
+            dbInitializer.Initialize().Wait();
         }
     }
 }
