@@ -10,9 +10,11 @@ using Done.Web.Models;
 using Done.Web.Models.Goals;
 using Done.Core.Web.Pagination;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Done.Web.Controllers
 {
+    [Authorize]
     public class GoalsController : Controller
     {
         private const int PageSize = 20;
@@ -27,6 +29,7 @@ namespace Done.Web.Controllers
         [HttpGet]
         public async Task<ActionResult> Index(string pattern = "", int page = 1)
         {
+            //await _users.GetUserAsync(HttpContext.User);
             var goalsCount = _goals.Get(goal => true).Count(x => x.Name.Contains(pattern));
             var totalPages = (int)Math.Ceiling(goalsCount / (decimal)PageSize);
 
@@ -37,6 +40,8 @@ namespace Done.Web.Controllers
 
             var goals =
                 await _goals
+                    // TODO: Think about foreign key and index
+                    // .Get(x => x.UserId == userId && x.Name.Contains(pattern))
                     .Get(x => x.Name.Contains(pattern))
                     .OrderBy(x => x.Id)
                     .Skip((page - 1) * PageSize)

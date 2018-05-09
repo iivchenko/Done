@@ -1,36 +1,35 @@
 ﻿@using Page = Done.Core.Web.Pagination.Page
-@using Done.Web.Models.Goals
+@using Done.Web.Areas.Administration.Models
 @model IndexViewModel
 
 @{
-    ViewBag.Title = "Goals";
+    Layout = "_Layout";
+    ViewBag.Title = "Users";
 }
 
-<!-- TODO: Make more accurate gaol count -->
+<!-- TODO: Make more accurate user count -->
 <div style="display: -ms-inline-flexbox;">
     <p>
         <h2>
-            Goals <span class="badge badge-pill badge-light" style="font-size: 50%; vertical-align: top">@Model.Total</span>
+            Users <span class="badge badge-pill badge-light" style="font-size: 50%; vertical-align: top">@Model.Total</span>
             
-            <a class="btn btn-success" style="float: right;" href=@Url.Action("New", "Goals")>New goal</a>
+            <a class="btn btn-success" style="float: right;" href=@Url.Action("New")>New User</a>
         </h2>
     </p>
 </div>
 <table class="table table-hover">
     <thead>
         <tr>
-            <th scope="col">Name</th>
-            <th scope="col">State</th>
+            <th scope="col">Name</th>           
         </tr>
     </thead>
     <tbody>
-        @foreach (var goal in Model.Goals)
+        @foreach (var user in Model.Users)
         {
             <tr>
                 <td>
-                    @Html.ActionLink(@goal.Name, "Edit", new { id = goal.Id })
-                </td>
-                <td>(@goal.State)</td>
+                    @Html.ActionLink(@user.UserName, "Edit", new { id = user.Id })
+                </td>               
             </tr>
         }
     </tbody>
@@ -40,7 +39,7 @@
 var vm = @Model;
 var pagination = @Model.Pagination;
 
-<!--TODO: Make ViewComponent for pagination -->
+<!--TODO: Make ViewComponent for pagination-->
 <nav>
     @* Previos button *@
     <ul class="pagination justify-content-center">
@@ -56,7 +55,7 @@ var pagination = @Model.Pagination;
         {
             <!-- TODO: Implement correct disable for active page button to avoid naviagtion to it self!-->
             <li class="page-item @TrySetActive(page)">
-                @Html.ActionLink(page.Index.ToString(), "Index", "Goals", new { pattern = vm.Pattern, page = page.Index }, new { @class="page-link" })
+                @Html.ActionLink(page.Index.ToString(), "Index", new { pattern = vm.Pattern, page = page.Index }, new { @class="page-link" })
                 @*<a class="page-link" href=@Url.Action("Index",  new { pattern = @vm.Pattern, page = @page.Index })>@{return page.Index;}</a>*@
             </li>
         }

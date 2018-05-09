@@ -1,0 +1,76 @@
+﻿@using Done.Web.Areas.Administration.Models
+@using Done.Domain
+@model EditUserViewModel
+
+@{
+    ViewBag.Title = "Edit User";    
+}
+
+@inject Microsoft.AspNetCore.Identity.RoleManager<Microsoft.AspNetCore.Identity.IdentityRole> RoleManager
+
+<br />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.Id)
+
+    <div class="input-group">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="name-addon">Name</span>                    
+            </div>
+
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", aria_label = "Username", aria_describedby = "name-addon" } })
+        </div>
+        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="input-group">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="name-addon">NewPassword</span>                    
+            </div>
+
+            @Html.EditorFor(model => model.NewPassword, new { htmlAttributes = new { @class = "form-control", aria_label = "Username", aria_describedby = "name-addon" } })
+        </div>
+        @Html.ValidationMessageFor(model => model.NewPassword, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="input-group">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="name-addon">Confirm Password</span>                    
+            </div>
+
+            @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", aria_label = "Username", aria_describedby = "name-addon" } })
+        </div>
+        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="input-group">
+        <div class="input-group-prepend" style="display: inline">
+            <span class="input-group-text" id="state-addon">Role</span>
+        </div>
+        <select name="Role" class="custom-select" aria-describedby="state-addon">
+            @foreach (var role in RoleManager.Roles)
+            {
+                <option @Select(@role.Name, @Model.Role.ToString())) value="@role">@role</option>
+            }
+        </select>
+    </div>
+
+    <br />
+    <button type="submit" class="btn btn-success float-right">Update</button>
+    <br />
+    <br />
+
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" });
+}
+@functions
+{
+    public string Select(string item, string state)
+    {
+        return item == state ? "selected=\"selected\"" : string.Empty;        
+    }
+}

@@ -1,14 +1,15 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Done.Core.Web.Pagination;
+using Microsoft.AspNetCore.Identity;
 
-namespace Done.Web.Models.Goals
+namespace Done.Web.Areas.Administration.Models
 {
-    // TODO: Make it general purpose
+     // TODO: Make it general purpose
     public sealed class IndexViewModel
     {
         public int Total { get; set; }
 
-        public IEnumerable<GoalViewModel> Goals { get; set; }
+        public IEnumerable<IdentityUser> Users { get; set; }
 
         public PageViewModel Pagination { get; set; }
 

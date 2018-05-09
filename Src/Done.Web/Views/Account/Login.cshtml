@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+@model Done.Web.Models.Account.LoginViewModel
+
+@{
+    Layout = null;
+}
+ 
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -15,19 +21,46 @@
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
 </head>
-<body>   
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            @{
-                var ver = System.Reflection.Assembly.GetAssembly(typeof(Done.Web.Program)).GetName().Version;
-                var version = $"{ver.Major}.{ver.Minor}.{ver.Build}";
-                var date = DateTime.Now.Year;
-            }
+<body>
+    <div style="width:400; height:200px; position: fixed; top: 50%; left: 50%; margin-top: -100px; margin-left: -150px;">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-            <p>&copy; @date - Done! Version: @version</p>
-        </footer>
+            <div style="display: flex">
+                <div class="input-group">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="name-addon">Name</span>                    
+                        </div>
+
+                        @Html.EditorFor(model => model.User, new { htmlAttributes = new { @class = "form-control", aria_label = "Username", aria_describedby = "name-addon" } })
+                    </div>                    
+                </div>
+            </div>
+
+            <div style="display: flex">
+                <div class="input-group">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="name-addon">Password</span>                    
+                        </div>
+
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", aria_label = "Username", aria_describedby = "name-addon" } })
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: inline-block">
+                <label asp-for="RememberMe"></label><br />
+                <input asp-for="RememberMe" />
+            </div>
+
+            <button type="submit" class="btn btn-success float-right">Login</button>
+
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" });
+        }
+
     </div>
 
     <environment include="Development">
@@ -50,6 +83,5 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
-    @RenderSection("scripts", required: false)
 </body>
 </html>

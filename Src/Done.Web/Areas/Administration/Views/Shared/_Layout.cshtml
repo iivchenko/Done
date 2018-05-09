@@ -1,0 +1,30 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light container">
+        <a class="navbar-brand" href=@Url.Action("Index") >Done!</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href=@Url.Action("Index")>Users <span class="sr-only">(current)</span></a>
+                </li>
+            </ul> 
+
+            @if(User.Identity.IsAuthenticated)
+            {
+                @* @using (Html.BeginForm("LogOff", "Account")) *@
+                <form action="/Account/LogOff" method="post">
+                    <span class="mr-sm-2">@User.Identity.Name</span>                    
+                    <button class="btn btn-outline-success btn-sm" type="submit">LogOut</button>
+                </form>
+            }
+        </div>
+    </nav>
+    @RenderBody()
+</div>
