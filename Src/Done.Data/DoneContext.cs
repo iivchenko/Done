@@ -13,6 +13,6 @@ namespace Done.Data
         {            
         }
 
-        public DbSet<Goal> Goals { get; set; }
+        public DbSet<Goal> Goals { get; set; }       
     }
 }

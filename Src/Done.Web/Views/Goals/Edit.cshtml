@@ -1,6 +1,6 @@
 ﻿@using Done.Web.Models.Goals
 @using Done.Domain
-@model GoalViewModel
+@model EditGoalViewModel
 
 @{
     ViewBag.Title = "Edit Goal";
@@ -32,7 +32,14 @@
             <select name="State" class="custom-select" aria-describedby="state-addon">
                 @foreach (var item in Enum.GetNames(typeof(State)))
                 {
-                    <option value="@item" @Select(@item, @Model.State.ToString()))>@item</option>
+                    if (item == Model.State.ToString())
+                    {
+                        <option value="@item" selected="selected">@item</option>
+                    }
+                    else
+                    {
+                        <option value="@item">@item</option>
+                    }                    
                 }
             </select>
         </div>
@@ -50,6 +57,6 @@
 {
     public string Select(string item, string state)
     {
-        return item == state ? "selected=\"selected\"" : string.Empty;        
+        return item == state ? "selected=\"selected\"" : string.Empty;
     }
 }

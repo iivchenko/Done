@@ -12,7 +12,7 @@ using System;
 namespace Done.Web.Migrations
 {
     [DbContext(typeof(DoneContext))]
-    [Migration("20180506145635_CreateDb")]
+    [Migration("20180519115207_CreateDb")]
     partial class CreateDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,13 +27,21 @@ namespace Done.Web.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime>("CreationDate");
+
                     b.Property<string>("Description");
+
+                    b.Property<DateTime>("ModificationDate");
 
                     b.Property<string>("Name");
 
                     b.Property<int>("State");
 
+                    b.Property<string>("UserId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Goals");
                 });
@@ -195,6 +203,13 @@ namespace Done.Web.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Done.Domain.Goal", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

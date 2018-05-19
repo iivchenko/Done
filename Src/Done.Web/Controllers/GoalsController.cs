@@ -11,6 +11,7 @@ using Done.Web.Models.Goals;
 using Done.Core.Web.Pagination;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace Done.Web.Controllers
 {
@@ -20,17 +21,23 @@ namespace Done.Web.Controllers
         private const int PageSize = 20;
         private const int PagesCount = 5;
         private readonly IRepository<Goal> _goals;
+        private readonly UserManager<IdentityUser> _users;
 
-        public GoalsController(IRepository<Goal> goals)
+        public GoalsController(UserManager<IdentityUser> users, IRepository<Goal> goals)
         {
+            _users = users;
            _goals = goals;
         }
 
         [HttpGet]
-        public async Task<ActionResult> Index(string pattern = "", int page = 1)
-        {
-            //await _users.GetUserAsync(HttpContext.User);
-            var goalsCount = _goals.Get(goal => true).Count(x => x.Name.Contains(pattern));
+        public async Task<ActionResult> Index(string pattern = "", int page = 1, bool showClosed = false)
+        {           
+            var goalsCount = 
+                _goals
+                    .Get(goal => goal.UserId == GetUserId())
+                    .Where(x => showClosed ?  true : x.State == State.Open)
+                    .Count(x => x.Name.Contains(pattern));
+
             var totalPages = (int)Math.Ceiling(goalsCount / (decimal)PageSize);
 
             if (page < 1 || (page > totalPages && totalPages > 0))
@@ -41,9 +48,9 @@ namespace Done.Web.Controllers
             var goals =
                 await _goals
                     // TODO: Think about foreign key and index
-                    // .Get(x => x.UserId == userId && x.Name.Contains(pattern))
-                    .Get(x => x.Name.Contains(pattern))
-                    .OrderBy(x => x.Id)
+                    .Get(x => x.UserId == GetUserId() && x.Name.Contains(pattern))
+                    .Where(x => showClosed ?  true : x.State == State.Open)
+                    .OrderByDescending(x => x.ModificationDate)
                     .Skip((page - 1) * PageSize)
                     .Take(PageSize)
                     .ToListAsync();
@@ -67,11 +74,14 @@ namespace Done.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> New([Bind("Name", "Description", "State")] GoalViewModel goal)
+        public async Task<ActionResult> New([Bind("Name", "Description")] NewGoalViewModel goal)
         {
             if (ModelState.IsValid)
             {
-                await _goals.AddAsync(goal.ToModel());
+                var g = goal.ToModel();
+                g.UserId = GetUserId();
+
+                await _goals.AddAsync(g);
 
                 return RedirectToAction("Index");
             }
@@ -83,22 +93,34 @@ namespace Done.Web.Controllers
         public async Task<ActionResult> Edit(long id)
         {
             // TODO: Provide correct and nice error view when item is not exist
-            var model = await _goals.Get(x => x.Id == id).SingleAsync();
-            return View(model.ToViewModel());
+            var model = await _goals.Get(x => x.UserId == GetUserId() && x.Id == id).SingleAsync();
+            return View(model.ToEditViewModel());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind("Id", "Name", "Description", "State")] GoalViewModel goal)
+        public async Task<ActionResult> Edit([Bind("Id", "Name", "Description", "State")] EditGoalViewModel goal)
         {
             if (ModelState.IsValid)
             {
-                await _goals.UpdateAsync(goal.ToModel());
+                var g = _goals.Get(x => x.UserId == GetUserId() && x.Id == goal.Id).Single();
+
+                g.Name = goal.Name;
+                g.Description = goal.Description;
+                g.ModificationDate = DateTime.UtcNow;
+                g.State = goal.State;
+
+                await _goals.UpdateAsync(g);
 
                 return RedirectToAction("Index");
             }
 
             return View(goal);
+        }
+
+        private string GetUserId()
+        {
+            return _users.GetUserId(HttpContext.User);
         }
 
         protected override void Dispose(bool disposing)

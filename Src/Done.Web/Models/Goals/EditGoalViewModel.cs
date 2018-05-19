@@ -1,13 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc;
-using Done.Domain;
-using System;
+﻿using Done.Domain;
+using System.ComponentModel.DataAnnotations;
 
 namespace Done.Web.Models.Goals
 {
-    public sealed class GoalViewModel
+    public sealed class EditGoalViewModel
     {
-        [HiddenInput(DisplayValue = false)]
         public long Id { get; set; }
 
         [Required]
@@ -18,9 +15,5 @@ namespace Done.Web.Models.Goals
 
         // TODO: Extract view state and Use automapper
         public State State { get; set; }
-
-        public DateTime CreationDate { get; set; }
-
-        public DateTime ModificationDate { get; set; }
     }
 }

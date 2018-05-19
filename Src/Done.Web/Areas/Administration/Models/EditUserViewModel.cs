@@ -17,7 +17,7 @@ namespace Done.Web.Areas.Administration.Models
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "The passwords do not match.")]
+        [Compare("NewPassword", ErrorMessage = "The passwords do not match.")]
         public string ConfirmPassword { get; set; }
 
         [Required]

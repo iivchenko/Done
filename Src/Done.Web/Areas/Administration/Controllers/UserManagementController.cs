@@ -120,6 +120,7 @@ namespace Done.Web.Areas.Administration.Controllers
 
                 if (!string.IsNullOrWhiteSpace(model.NewPassword))
                 {
+                    Console.WriteLine(model.NewPassword);
                     await _users.RemovePasswordAsync(user);
                     await _users.AddPasswordAsync(user, model.NewPassword);
                 }

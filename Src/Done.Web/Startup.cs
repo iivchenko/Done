@@ -30,7 +30,17 @@ namespace Done.Web
             services.AddDbContext<DoneContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("Done.Web")));
 
             services
-                .AddIdentity<IdentityUser, IdentityRole>()
+                .AddIdentity<IdentityUser, IdentityRole>
+                (
+                    options => 
+                    {
+                        options.Password.RequiredLength = 4;
+                        options.Password.RequireLowercase = false;
+                        options.Password.RequireUppercase = false;
+                        options.Password.RequireNonAlphanumeric = false;
+                        options.Password.RequireDigit = false;
+                    }
+                )
                 .AddEntityFrameworkStores<DoneContext>();
 
             services.AddScoped<IRepository<IdentityUser>, Repository<IdentityUser>>(provider => new Repository<IdentityUser>(provider.GetService<DoneContext>()));
